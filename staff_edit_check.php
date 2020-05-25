@@ -9,12 +9,13 @@
 <?php
 ini_set('display_errors', 1);
 // methodsはpost
-$name = $_POST['name'];
+$name = htmlspecialchars($_POST['name'] , ENT_QUOTES);
 $pass = $_POST['password'];
 $pass2 = $_POST['password2'];
 $code = $_POST['staffcode'];
 
-if ($name == '' || $pass == '' || $pass == $pass2) {
+if ($name != '' || $pass != '' || $pass == $pass2) {
+    $pass = md5($pass);
     echo '<p>こちらでお間違い無いですか？</p>';
     echo '<form method="post" action="staff_edit_done.php">';
     echo '変更後のお名前:<p>' . $name . '</p><br>';

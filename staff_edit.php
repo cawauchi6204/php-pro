@@ -16,7 +16,7 @@
         $dbh = new PDO($dsn, $user , $password);
         $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         // ここまではテンプレ
-        $code = $_POST['staffcode'];
+        $code = $_GET['staffcode'];
         // 前の画面からとってきたstaffcodeを変数codeに格納している
         $sql = 'SELECT code,name FROM mst_staff WHERE code = :code';
         $stmt = $dbh->prepare($sql);
@@ -32,6 +32,7 @@
 
         // $codeの名前をデータベースからとってきてそれを変数$nameに格納してからinputのvalueに入力する
         echo '<form method="post" action="staff_edit_check.php">';
+        echo 'スタッフコード:<span>' . $code . '</span><br>';
         echo 'お名前:<input type="text" name="name" value="'.$rec_name.'"><br>';
         echo '新規パスワード:<input type="password" name="password"><br>';
         echo 'パスワード再入力:<input type="password" name="password2"><br>';

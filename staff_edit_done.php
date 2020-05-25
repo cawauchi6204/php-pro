@@ -19,7 +19,9 @@
         $code = $_POST['staffcode'];
         $name = $_POST['name'];
         $pass = $_POST['password'];
-        $sql = 'UPDATE mst_staff SET ( name=:name , password=:password ) WHERE code=:code';
+        $sql = 'UPDATE mst_staff SET name=:name , password=:password WHERE code=:code';
+        // $sql = 'UPDATE mst_staff SET (name=:name , password=:password) WHERE code=:code';
+        // SET以降に()をつけていてそれがエラーになっていた
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(":code" , $code);
         $stmt->bindValue(":name" , $name);
