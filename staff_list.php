@@ -23,7 +23,7 @@
 
         echo 'スタッフ一覧<br><br>';
 
-        echo '<form method="post" action="staff_edit.php">';
+        echo '<form method="post" action="staff_branch.php">';
 
         while(true) {
             $rec = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -36,7 +36,8 @@
             echo $rec['name'] . '<br>';
         }
 
-        echo '<input type="submit" value="修正">';
+        echo '<input type="submit" name="edit" value="修正">';
+        echo '<input type="submit" name="delete" value="削除">';
         echo '</form>';
         
     } catch(PDOExeption $e) {
