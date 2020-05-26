@@ -17,7 +17,7 @@ try {
     // ここまではテンプレ
     $code = $_GET['procode'];
     // 前の画面からとってきたstaffcodeを変数codeに格納している
-    $sql = 'SELECT code,name,price FROM mst_product WHERE code = :code';
+    $sql = 'SELECT code,name,price,gazou FROM mst_product WHERE code = :code';
     $stmt = $dbh->prepare($sql);
     $stmt->bindValue(":code", $code);
     $stmt->execute();
@@ -28,7 +28,14 @@ try {
     $rec_code = $rec['code'];
     $rec_name = $rec['name'];
     $rec_price = $rec['price'];
+    $rec_img = $rec['gazou'];
     // methodsはpost
+
+    if($rec_img === '') {
+        $disp_img = '';
+    } else {
+        $disp_img ='<img src="./img/' . $rec_img . '">';
+    }
 
     // $codeの名前をデータベースからとってきてそれを変数$nameに格納してからinputのvalueに入力する
     echo '<form method="post" action="pro_edit_check.php">';
@@ -36,6 +43,7 @@ try {
     echo '商品コード:<span>' . $rec_code . '</span><br>';
     echo 'お名前:<span>' . $rec_name . '</span><br>';
     echo '価格:<span>' . $rec_price . '</span><br>';
+    echo $disp_img . '<br>';
     echo '<input type="hidden" name="procode" value="' . $code . '">';
     echo '<input type="button" value="戻る" onclick="history.back()">';
     echo '</form>';

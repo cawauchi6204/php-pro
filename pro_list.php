@@ -39,7 +39,7 @@
             echo '<input type="radio" name="procode" value="'.$rec['code'].'">';
             // この一文が重要(valueにコード番号を入れて識別している)
             echo $rec['name'] . '---';
-            echo $rec['price'] . '円';
+            echo $rec['price'] . '円<br>';
         }
 
         echo '<input type="submit" name="disp" value="参照">';

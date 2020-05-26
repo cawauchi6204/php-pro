@@ -17,7 +17,7 @@
         // ここまではテンプレ
         $code = $_GET['procode'];
         // 前の画面からとってきたprocodeを変数codeに格納している
-        $sql = 'SELECT code,name,price FROM mst_product WHERE code = :code';
+        $sql = 'SELECT code,name,price,gazou FROM mst_product WHERE code = :code';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(":code", $code);
         $stmt->execute();
@@ -28,14 +28,22 @@
         $rec_name = $rec['name'];
         $rec_code = $rec['code'];
         $rec_price = $rec['price'];
+        $rec_img = $rec['img'];
 
+        if($rec_img === '') {
+          $disp_img = '';
+      } else {
+          $disp_img ='<img src="./img/' . $rec_img . '">';
+      }
         // $codeの名前をデータベースからとってきてそれを変数$nameに格納してからinputのvalueに入力する
         echo '<p>スタッフ削除</p>';
         echo '商品コード:<span>' . $code . '</span><br>';
         echo '商品名:<span>' . $rec_name . '</span><br>';
+        echo $disp_img;
         echo '<p>この商品を削除してもよろしいですか?</p>';
         echo '<form method="post" action="pro_delete_done.php">';
         echo '<input type="hidden" name="procode" value="' . $code . '">';
+        echo '<input type="hidden" name="img" value="' . $rec_img . '">';
         echo '<input type="submit" value="OK">';
         echo '<input type="button" onclick="history.back()" value="戻る">';
         echo '</form>';
