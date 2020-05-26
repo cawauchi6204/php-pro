@@ -15,9 +15,9 @@
         $dbh = new PDO($dsn, $user, $password);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // ここまではテンプレ
-        $code = $_POST['staffcode'];
-        // 前の画面からとってきたstaffcodeを変数codeに格納している
-        $sql = 'DELETE FROM mst_staff WHERE code = :code';
+        $code = $_POST['procode'];
+        // 前の画面からとってきたprocodeを変数codeに格納している
+        $sql = 'DELETE FROM mst_product WHERE code = :code';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(":code", $code);
         $stmt->execute();

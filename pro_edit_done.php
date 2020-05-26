@@ -15,16 +15,21 @@
         $dbh = new PDO($dsn, $user, $password);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // ここまではテンプレ
-        $code = $_POST['staffcode'];
-        // 前の画面からとってきたstaffcodeを変数codeに格納している
-        $sql = 'DELETE FROM mst_staff WHERE code = :code';
+
+        $code = $_POST['procode'];
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $sql = 'UPDATE mst_product SET name=:name,price=:price WHERE code=:code';
+        // $sql = 'UPDATE mst_staff SET (name=:name , password=:password) WHERE code=:code';
+        // SET以降に()をつけていてそれがエラーになっていた
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(":code", $code);
+        $stmt->bindValue(":name", $name);
+        $stmt->bindValue(":price", $price);
         $stmt->execute();
 
-        // $codeの名前をデータベースからとってきてそれを変数$nameに格納してからinputのvalueに入力する
-        echo '<p>削除しました</p>';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
+        var_dump($name, $code, $price);
+        echo '登録情報を変更しました';
     } catch (PDOExeption $e) {
         echo 'ただいま障害により大変ご迷惑をおかけしております';
         exit();

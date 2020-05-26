@@ -19,7 +19,7 @@
         // 前の画面からとってきたstaffcodeを変数codeに格納している
         $sql = 'SELECT code,name FROM mst_staff WHERE code = :code';
         $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(":code", "$code");
+        $stmt->bindValue(":code", $code);
         $stmt->execute();
 
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
