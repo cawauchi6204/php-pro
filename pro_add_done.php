@@ -6,30 +6,38 @@
   <title>ろくまる農園</title>
 </head>
 <body>
-<?php
+  <?php
     ini_set('display_errors', 1);
     try {
+        $pro_name = $_POST['name'];
+        $pro_price = $_POST['price'];
+
+        $pro_name = htmlspecialchars($pro_name, ENT_QUOTES, 'UTF-8');
+        $pro_price = htmlspecialchars($pro_price, ENT_QUOTES, 'UTF-8');
+
         $dsn = 'mysql:dbname=shop;host=127.0.0.1;charset=utf8';
         $user='root';
         $password='root';
         $dbh = new PDO($dsn, $user, $password);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        // ここまではテンプレ
-        $code = $_POST['staffcode'];
-        // 前の画面からとってきたstaffcodeを変数codeに格納している
-        $sql = 'DELETE FROM mst_staff WHERE code = :code';
+        $sql = 'INSERT INTO mst_product (name,price) VALUES (?,?)';
         $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(":code", $code);
-        $stmt->execute();
 
-        // $codeの名前をデータベースからとってきてそれを変数$nameに格納してからinputのvalueに入力する
-        echo '<p>削除しました</p>';
-        echo '<input type="button" onclick="history.back()" value="戻る">';
+        $dbh = null;
+        
+        $data[] = $pro_name;
+        $data[] = $pro_price;
+        $stmt->execute($data);
+
+        echo $pro_name . 'を追加しました。';
     } catch (PDOExeption $e) {
         echo 'ただいま障害により大変ご迷惑をおかけしております';
+        echo $e->getMessage();
         exit();
     }
 
   ?>
+
+  <a href="pro_list.php">戻る</a> 
 </body>
 </html>
