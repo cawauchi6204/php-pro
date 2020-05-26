@@ -16,12 +16,17 @@
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // ここまではテンプレ
         $code = $_POST['procode'];
+        $img = $_POST['img'];
         // 前の画面からとってきたprocodeを変数codeに格納している
         $sql = 'DELETE FROM mst_product WHERE code = :code';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(":code", $code);
         $stmt->execute();
 
+          if($img != '') {
+            unlink('./img/'.$img);
+          }
+          
         // $codeの名前をデータベースからとってきてそれを変数$nameに格納してからinputのvalueに入力する
         echo '<p>削除しました</p>';
         echo '<input type="button" onclick="history.back()" value="戻る">';

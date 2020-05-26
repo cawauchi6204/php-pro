@@ -18,7 +18,7 @@
         // ここまではテンプレ
         $code = $_GET['procode'];
         // 前の画面からとってきたprocodeを変数codeに格納している
-        $sql = 'SELECT code,name,price FROM mst_product WHERE code = :code';
+        $sql = 'SELECT code,name,price,gazou FROM mst_product WHERE code = :code';
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(":code" , $code);
         $stmt->execute();
@@ -29,16 +29,26 @@
         $rec_name = $rec['name'];
         $rec_code = $rec['code'];
         $rec_price = $rec['price'];
+        $rec_old_img = $rec['gazou'];
         // methodsはpost
 
+        if($rec_old_img === '') {
+          $disp_img = '';
+      } else {
+          $disp_img ='<img src="./img/' . $rec_old_img . '">';
+      }
+
         // $codeの名前をデータベースからとってきてそれを変数$nameに格納してからinputのvalueに入力する
-        echo '<form method="post" action="pro_edit_check.php">';
+        echo '<form method="post" action="pro_edit_check.php" enctype="multipart/form-data">';
         echo '商品コード:<span>' . $code . '</span><br>';
         echo '商品名前:<input type="text" name="name" value="'.$rec_name.'"><br>';
         echo '商品価格:<input type="text" name="price" value="'.$rec_price.'"><br>';
         echo '<input type="hidden" name="procode" value="' . $code . '">';
+        echo '<input type="hidden" name="img_old_name" value="' . $rec_old_img . '">';
         echo '<input type="submit" value="修正">';
         echo '</form>';
+        echo $disp_img . '<br><span>画像を選んでください</span>';
+        echo '<input type="file" name="img" style="width:400px"><br>';
         
     } catch(PDOExeption $e) {
         echo 'ただいま障害により大変ご迷惑をおかけしております';
