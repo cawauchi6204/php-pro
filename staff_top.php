@@ -18,7 +18,6 @@
   <title>ろくまる農園</title>
 </head>
 <body>
-  スタッフが選択されていません<br>
-  <a href="staff_list">戻る</a>
+  
 </body>
 </html>
