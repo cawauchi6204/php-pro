@@ -1,6 +1,7 @@
 <?php
     session_start();
     session_regenerate_id(true);
+    require_once('./common.php');
     if (isset($_SESSION['login']) == false) {
         echo 'ログインされていません';
         echo '<a href="staff_login.html">ログイン画面へ</a>';
@@ -28,6 +29,8 @@
         $dbh = new PDO($dsn, $user , $password);
         $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         // ここまではテンプレ
+
+        $post = h($_POST);
         $code = $_GET['procode'];
         // 前の画面からとってきたprocodeを変数codeに格納している
         $sql = 'SELECT code,name,price,gazou FROM mst_product WHERE code = :code';

@@ -1,6 +1,7 @@
 <?php
     session_start();
     session_regenerate_id(true);
+    require_once('./common.php');
     if (isset($_SESSION['login']) == false) {
         echo 'ログインされていません';
         echo '<a href="staff_login.html">ログイン画面へ</a>';
@@ -28,9 +29,10 @@
         $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         // ここまではテンプレ
 
-        $code = $_POST['staffcode'];
-        $name = $_POST['name'];
-        $pass = $_POST['password'];
+        $post = h($_POST);
+        $code = $post['staffcode'];
+        $name = $post['name'];
+        $pass = $post['password'];
         $sql = 'UPDATE mst_staff SET name=:name , password=:password WHERE code=:code';
         // $sql = 'UPDATE mst_staff SET (name=:name , password=:password) WHERE code=:code';
         // SET以降に()をつけていてそれがエラーになっていた
