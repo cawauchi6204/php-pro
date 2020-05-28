@@ -1,6 +1,7 @@
 <?php
     session_start();
     session_regenerate_id(true);
+    require_once('./common.php');
     if (isset($_SESSION['login']) == false) {
         echo 'ログインされていません';
         echo '<a href="staff_login.html">ログイン画面へ</a>';
@@ -21,9 +22,10 @@
   <?php
     ini_set('display_errors', 1);
     try {
-        $pro_name = $_POST['name'];
-        $pro_price = $_POST['price'];
-        $pro_img_name = $_POST['img'];
+        $post = h($_POST);
+        $pro_name = $post['name'];
+        $pro_price = $post['price'];
+        $pro_img_name = $post['img'];
         var_dump($pro_img_name);
 
         $pro_name = htmlspecialchars($pro_name, ENT_QUOTES, 'UTF-8');

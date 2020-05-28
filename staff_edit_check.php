@@ -1,6 +1,7 @@
 <?php
     session_start();
     session_regenerate_id(true);
+    require_once('./common.php');
     if (isset($_SESSION['login']) == false) {
         echo 'ログインされていません';
         echo '<a href="staff_login.html">ログイン画面へ</a>';
@@ -21,10 +22,11 @@
 <?php
 ini_set('display_errors', 1);
 // methodsはpost
-$name = htmlspecialchars($_POST['name'] , ENT_QUOTES);
-$pass = $_POST['password'];
-$pass2 = $_POST['password2'];
-$code = $_POST['staffcode'];
+$post = h($_POST);
+$name = $post['name'];
+$pass = $post['password'];
+$pass2 = $post['password2'];
+$code = $post['staffcode'];
 
 if ($name != '' || $pass != '' || $pass == $pass2) {
     $pass = md5($pass);

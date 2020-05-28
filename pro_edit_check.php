@@ -1,6 +1,7 @@
 <?php
     session_start();
     session_regenerate_id(true);
+    require_once('./common.php');
     if (isset($_SESSION['login']) == false) {
         echo 'ログインされていません';
         echo '<a href="staff_login.html">ログイン画面へ</a>';
@@ -20,18 +21,19 @@
 <body>
 <?php
 ini_set('display_errors', 1);
+$post = h($_POST);
 // methodsはpost
-$name = htmlspecialchars($_POST['name'], ENT_QUOTES);
-$price = htmlspecialchars($_POST['price'], ENT_QUOTES);
-$code = $_POST['procode'];
-$old_img = $_POST['img_name_old'];
+$name = $post['name'];
+$price = $post['price'];
+$code = $post['procode'];
+$old_img = $post['img_name_old'];
 $new_img = $_FILES['img'];
 
-if($new_img['size'] > 0) {
-    if($pro_img['size'] > 1000000) {
+if ($new_img['size'] > 0) {
+    if ($pro_img['size'] > 1000000) {
         echo '画像が大きすぎます';
     } else {
-        move_uploaded_file($new_img['tmp_name'],'img/'.$new_img['name']);
+        move_uploaded_file($new_img['tmp_name'], 'img/'.$new_img['name']);
         echo '<img src="./img/'.$new_img['name'].'">';
         echo '<br>';
     }

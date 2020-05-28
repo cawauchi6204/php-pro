@@ -1,6 +1,7 @@
 <?php
     session_start();
     session_regenerate_id(true);
+    require_once('./common.php');
     if (isset($_SESSION['login']) == false) {
         echo 'ログインされていません';
         echo '<a href="staff_login.html">ログイン画面へ</a>';
@@ -28,11 +29,12 @@
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // ここまではテンプレ
 
-        $code = $_POST['procode'];
-        $name = $_POST['name'];
-        $price = $_POST['price'];
-        $old_img = $_POST['old_img'];
-        $new_img = $_POST['new_img'];
+        $post = h($_POST);
+        $code = $post['procode'];
+        $name = $post['name'];
+        $price = $post['price'];
+        $old_img = $post['old_img'];
+        $new_img = $post['new_img'];
 
         $sql = 'UPDATE mst_product SET name=:name,price=:price,gazou=:new_img WHERE code=:code';
         // $sql = 'UPDATE mst_staff SET (name=:name , password=:password) WHERE code=:code';
@@ -44,14 +46,14 @@
         $stmt->bindValue(":new_img", $new_img);
         $stmt->execute();
         
-        if($old_img != $new_img) {
-          if($old_img != '') {
-            unlink('./img/'.$old_img);
-          }
+        if ($old_img != $new_img) {
+            if ($old_img != '') {
+                unlink('./img/'.$old_img);
+            }
         }
         // unlink('ファイル名');でファイルを削除することができる
 
-        var_dump($name, $code, $price,$old_img,$new_img);
+        var_dump($name, $code, $price, $old_img, $new_img);
         echo '登録情報を変更しました';
     } catch (PDOExeption $e) {
         echo 'ただいま障害により大変ご迷惑をおかけしております';
